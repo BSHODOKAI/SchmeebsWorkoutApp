@@ -2,13 +2,157 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SchmeebsWorkoutApp"
+             xmlns:controls="clr-namespace:SchmeebsWorkoutApp"
+             xmlns:enums="clr-namespace:SchmeebsWorkoutApp.Droid.Enumerations;assembly=SchmeebsWorkoutApp.Droid"
              x:Class="SchmeebsWorkoutApp.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="OneRepMaxLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+            <Style x:Key="IntensityPickerLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style x:Key="OneRepMaxEntry" TargetType="Entry">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="BackgroundColor" Value="Gray" />
+                <Setter Property="Keyboard" Value="Numeric" />
+            </Style>
+            <Style x:Key="StackLayoutForRepEntries" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Spacing" Value="5"/>
+                <Setter Property="Margin" Value="0,0" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+            <Style x:Key="PickerForIntensity" TargetType="Picker">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="BackgroundColor" Value="DarkGray"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="Black">
+            <Grid VerticalOptions="Start" ColumnSpacing="0" RowSpacing="0" Margin="10,10">
+                <Grid.RowDefinitions >
+                    <RowDefinition x:Name="TitleRow" Height="120" />
+                    <RowDefinition x:Name="Row0" Height="*" />
+                    <RowDefinition x:Name="Row1" Height="*" />
+                    <RowDefinition x:Name="Row2" Height="*" />
+                    <RowDefinition x:Name="Row3" Height="*" />
+                    <RowDefinition x:Name="Row4" Height="*" />
+                    <RowDefinition x:Name="Row5" Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="Column1" Width="*" />
+                    <ColumnDefinition x:Name="Column2" Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Row="0"
+                             Grid.ColumnSpan="2">
+                    <Label VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           Text="Schmeebs Workout Tracker"
+                           FontSize="48"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           TextColor="Red"/>
+                </StackLayout>
+                <Label x:Name="DeadliftLabel" Grid.Column="0" Grid.Row="1"
+                           Text="Deadlift:"
+                           Style="{StaticResource Key=OneRepMaxLabel}"
+                           />
+                <Entry x:Name="Deadlift1RM" Grid.Column="1" Grid.Row="1"
+                           Style="{StaticResource Key=OneRepMaxEntry}" 
+                           />
+                <Label x:Name="OverheadPressLabel" Grid.Column="0" Grid.Row="2"
+                        Text="Overhead Press:"
+                        Style="{StaticResource Key=OneRepMaxLabel}" 
+                        />
+                <Entry x:Name="OverheadPress1RM" Grid.Column="1" Grid.Row="2"
+                       Style="{StaticResource Key=OneRepMaxEntry}"
+                       />
+                <Label x:Name="SquatLabel" Grid.Column="0" Grid.Row="3"
+                       Text="Squat:"
+                       Style="{StaticResource OneRepMaxLabel}"/>
+                <Entry x:Name="Squat1RM" Grid.Column="1" Grid.Row="3"
+                       Style="{StaticResource OneRepMaxEntry}"/>
+                <Label x:Name="BenchLabel" Grid.Column="0" Grid.Row="4"
+                       Text="Bench:"
+                       Style="{StaticResource OneRepMaxLabel}"/>
+                <Entry x:Name="Bench1RM" Grid.Column="1" Grid.Row="4"
+                       Style="{StaticResource OneRepMaxEntry}"/>
+                <StackLayout Grid.ColumnSpan="2" Grid.Row="5" Spacing="0">
+                    <Grid VerticalOptions="Start" ColumnSpacing="2" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Strength Intensity" Grid.Row="0" Grid.Column="0"
+                           Style="{StaticResource IntensityPickerLabel}"/>
+                        <Picker Title="Strength Intensity"
+                            x:Name="StrengthIntensityPicker"
+                            Grid.Column="0"
+                            Style="{StaticResource PickerForIntensity}">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Light</x:String>
+                                    <x:String>Medium</x:String>
+                                    <x:String>Heavy</x:String>
+                                    <x:String>Brutal</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        <Label Text="Assitance Intensity" Grid.Row="0" Grid.Column="1"
+                           Style="{StaticResource IntensityPickerLabel}"/>
+                        <Picker Title="Assistance Intensity"
+                                x:Name="AsistanceIntensityPicker"
+                                Grid.Column="1"
+                                Style="{StaticResource PickerForIntensity}">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Light</x:String>
+                                    <x:String>Medium</x:String>
+                                    <x:String>Heavy</x:String>
+                                    <x:String>Brutal</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        <Label Text="Conditioning Intensity" Grid.Row="0" Grid.Column="2"
+                           Style="{StaticResource IntensityPickerLabel}"/>
+                        <Picker Title="Conditioning Intensity"
+                                x:Name="ConditioningINtensityPicker"
+                                Grid.Column="2"
+                                Style="{StaticResource PickerForIntensity}">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Light</x:String>
+                                    <x:String>Medium</x:String>
+                                    <x:String>Heavy</x:String>
+                                    <x:String>Brutal</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </Grid>
+                </StackLayout>
+                <Button x:Name="SeeWorkoutButton" Grid.ColumnSpan="2" Grid.Row="6"
+                            Text="See Workout"
+                            Pressed="SeeWorkoutButton_Pressed"/>
+            </Grid>
+            
+        </ScrollView>
+    </ContentPage.Content>
+    
 </ContentPage>
